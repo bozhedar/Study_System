@@ -50,3 +50,5 @@ CREATE TABLE schedules
         FOREIGN KEY (course_id)
             REFERENCES courses(id)
 );
+--changeset bogdan:1
+ALTER TABLE schedules ALTER COLUMN lesson_date TYPE TIMESTAMP WITHOUT TIME ZONE;

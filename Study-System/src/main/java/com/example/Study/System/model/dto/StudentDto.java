@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record StudentDto(
-        @NotBlank(message = "Имя обязательно")
-        @Size(max = 32, message = "Имя не должно превышать 32 символа")
+        @NotBlank(message = "Name is required")
+        @Size(max = 32, message = "Name must not exceed 32 characters")
         String name,
 
-        @NotBlank(message = "Фамилия обязательна")
-        @Size(max = 32, message = "Фамилия не должна превышать 32 символа")
+        @NotBlank(message = "Surname is required")
+        @Size(max = 32, message = "Surname must not exceed 32 characters")
         String surname
-) {
+)  {
 }
