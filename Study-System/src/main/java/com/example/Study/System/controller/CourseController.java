@@ -1,7 +1,7 @@
 package com.example.Study.System.controller;
 
-import com.example.Study.System.model.dto.StudentDto;
-import com.example.Study.System.service.StudentService;
+import com.example.Study.System.model.dto.CourseDto;
+import com.example.Study.System.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,30 +12,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("api/v1/lms/students")
+@RequestMapping("api/v1/lms/courses")
 @RequiredArgsConstructor
-public class StudentController {
-    private final StudentService studentService;
+public class CourseController {
+    private final CourseService courseService;
 
     @PostMapping("/")
-    public StudentDto create(@RequestBody @Valid StudentDto dto) {
-        return studentService.create(dto);
+    public CourseDto create(@RequestBody @Valid CourseDto dto) {
+        return courseService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public StudentDto update(@PathVariable Long id, @RequestBody @Valid StudentDto dto) {
-        return studentService.update(id, dto);
+    public CourseDto  update(@PathVariable Long id, @RequestBody @Valid CourseDto dto) {
+        return courseService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        studentService.delete(id);
-    }
-
-    @PutMapping("/{id}/add_group")
-    public StudentDto addStudentToGroup(@PathVariable Long id, @RequestBody String groupName) {
-       return studentService.addStudentToGroup(id, groupName);
+        courseService.delete(id);
     }
 }
