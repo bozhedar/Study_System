@@ -1,5 +1,6 @@
 package com.example.Study.System.controller;
 
+import com.example.Study.System.model.dto.GroupDto;
 import com.example.Study.System.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,13 +18,12 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping("/")
-    public String create(@RequestBody String name) {
-        groupService.create(name);
-        return name;
+    public GroupDto create(@RequestBody String name) {
+        return groupService.create(name);
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, @RequestBody String name) {
+    public GroupDto update(@PathVariable Long id, @RequestBody String name) {
         return groupService.update(id, name);
     }
 

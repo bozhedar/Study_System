@@ -52,3 +52,19 @@ CREATE TABLE schedules
 );
 --changeset bogdan:2
 ALTER TABLE schedules ALTER COLUMN lesson_date TYPE TIMESTAMP WITHOUT TIME ZONE;
+
+--changeset bogdan:3
+CREATE TABLE groups_courses
+(
+    id        SERIAL PRIMARY KEY,
+    group_id  INT NOT NULL,
+    course_id INT NOT NULL,
+
+    CONSTRAINT fk_groups_courses
+        FOREIGN KEY (group_id)
+            REFERENCES groups (id),
+    CONSTRAINT fk_courses_groups
+        FOREIGN KEY (course_id)
+            REFERENCES courses (id)
+
+);

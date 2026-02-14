@@ -1,6 +1,8 @@
 package com.example.Study.System.exception.course;
 
-public class CourseNotFoundException extends RuntimeException {
+import com.example.Study.System.exception.NotFoundException;
+
+public class CourseNotFoundException extends NotFoundException {
     public CourseNotFoundException() {
         super("Course not found");
     }

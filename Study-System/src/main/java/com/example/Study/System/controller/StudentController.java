@@ -1,5 +1,6 @@
 package com.example.Study.System.controller;
 
+import com.example.Study.System.model.dto.GroupDto;
 import com.example.Study.System.model.dto.StudentDto;
 import com.example.Study.System.service.StudentService;
 import jakarta.validation.Valid;
@@ -34,8 +35,8 @@ public class StudentController {
         studentService.delete(id);
     }
 
-    @PutMapping("/{id}/add_group")
-    public StudentDto addStudentToGroup(@PathVariable Long id, @RequestBody String groupName) {
-       return studentService.addStudentToGroup(id, groupName);
+    @PutMapping("/{id}/add_to_group")
+    public StudentDto addStudentToGroup(@PathVariable Long id, @RequestBody GroupDto group) {
+       return studentService.addStudentToGroup(id, group);
     }
 }
