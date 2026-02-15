@@ -42,11 +42,7 @@ public class ScheduleService {
         scheduleRepository.delete(entity);
     }
 
-    private ScheduleEntity getScheduleEntityById(Long id) {
-        return scheduleRepository.findById(id).orElseThrow(() -> {
-            log.error("Schedule Not Found");
-            return new ScheduleNotFoundException();});
-    }
+
 
     public List<ScheduleDto> getGroupSchedule(Long groupId) {
         return scheduleMapper.toDtos(
@@ -60,4 +56,10 @@ public class ScheduleService {
         );
     }
 
+    private ScheduleEntity getScheduleEntityById(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(() -> {
+            log.error("Schedule Not Found");
+            return new ScheduleNotFoundException();
+        });
+    }
 }

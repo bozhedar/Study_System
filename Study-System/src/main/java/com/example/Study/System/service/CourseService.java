@@ -51,7 +51,7 @@ public class CourseService {
 
     public void addGroupOnCourse(Long id, GroupDto dto) {
         CourseEntity course = getCourseById(id);
-        GroupEntity group = groupRepository.findByName(dto.name());
+        GroupEntity group = groupRepository.findByName(dto.name()).orElse(null);
 
         if (group != null) {
             groupCourseRepository.save(GroupCourse.builder()

@@ -48,10 +48,10 @@ public class StudentService {
     }
 
     public StudentDto addStudentToGroup(Long id, GroupDto group) {
-        if (groupRepository.findByName(group.name()) != null) {
+        GroupEntity groupEntity = groupRepository.findByName(group.name()).orElse(null);
 
+        if (groupEntity != null) {
             StudentEntity student = getStudentById(id);
-            GroupEntity groupEntity = groupRepository.findByName(group.name());
             student.setGroup(groupEntity);
             studentRepository.save(student);
 
