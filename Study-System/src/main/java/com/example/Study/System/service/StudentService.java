@@ -12,6 +12,8 @@ import com.example.Study.System.model.dto.StudentDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -48,21 +50,23 @@ public class StudentService {
     }
 
     public StudentDto addStudentToGroup(Long id, GroupDto group) {
-        GroupEntity groupEntity = groupRepository.findByName(group.name()).orElse(null);
+        GroupEntity groupEntity = groupRepository.findByName(group.name()).orElseThrow(() ->
+        {
+            log.warn("Group not found");
+            return new GroupNotFoundException();
+        });
 
-        if (groupEntity != null) {
-            StudentEntity student = getStudentById(id);
-            student.setGroup(groupEntity);
-            studentRepository.save(student);
+        StudentEntity student = getStudentById(id);
+        student.setGroup(groupEntity);
+        studentRepository.save(student);
 
-            log.info("Student {} has been added to group", id);
-            return studentMapper.toDto(student);
+        log.info("Student {} has been added to group", id);
+        return studentMapper.toDto(student);
+    }
 
-        } else {
-            log.error("Group not found");
-            throw new GroupNotFoundException();
-        }
-
+    public Page<StudentDto> getAllStudents(Pageable pageable) {
+        Page<StudentEntity> entities = studentRepository.findAll(pageable);
+        return entities.map(studentMapper::toDto);
     }
 
     private StudentEntity getStudentById(Long id) {

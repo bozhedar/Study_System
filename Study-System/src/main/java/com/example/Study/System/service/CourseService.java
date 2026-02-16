@@ -4,6 +4,7 @@ import com.example.Study.System.dao.CourseRepository;
 import com.example.Study.System.dao.GroupCourseRepository;
 import com.example.Study.System.dao.GroupRepository;
 import com.example.Study.System.exception.course.CourseNotFoundException;
+import com.example.Study.System.exception.group.GroupNotFoundException;
 import com.example.Study.System.mapper.CourseMapper;
 import com.example.Study.System.model.CourseEntity;
 import com.example.Study.System.model.GroupCourse;
@@ -51,16 +52,19 @@ public class CourseService {
 
     public void addGroupOnCourse(Long id, GroupDto dto) {
         CourseEntity course = getCourseById(id);
-        GroupEntity group = groupRepository.findByName(dto.name()).orElse(null);
+        GroupEntity group = groupRepository.findByName(dto.name()).orElseThrow(() ->
+        {
+            log.warn("Group not found");
+            return new GroupNotFoundException();
+        });
 
-        if (group != null) {
             groupCourseRepository.save(GroupCourse.builder()
                     .group(group)
                     .course(course)
                     .build());
             log.info("Group added successfully");
         }
-    }
+
 
     private CourseEntity getCourseById(Long id) {
         return courseRepository.findById(id).orElseThrow(() -> {
