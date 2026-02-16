@@ -1,12 +1,20 @@
 --changeset bogdan:1
-CREATE TABLE courses
+CREATE SCHEMA study_system;
+
+CREATE TABLE study_system.courses
 (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(32) NOT NULL,
     description TEXT DEFAULT ''
 );
 
-CREATE TABLE students
+CREATE TABLE study_system.groups
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE study_system.students
 (
     id      SERIAL PRIMARY KEY,
     name    VARCHAR(32) NOT NULL,
@@ -14,23 +22,19 @@ CREATE TABLE students
     group_id INT NOT NULL,
     CONSTRAINT fk_students_groups
         FOREIGN KEY (group_id)
-        REFERENCES groups(id)
+        REFERENCES study_system.groups(id)
 );
 
-CREATE TABLE groups
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(16) NOT NULL
-);
 
-CREATE TABLE teachers
+
+CREATE TABLE study_system.teachers
 (
     id      SERIAL PRIMARY KEY,
     name    VARCHAR(32) NOT NULL,
     surname VARCHAR(32) NOT NULL
 );
 
-CREATE TABLE schedules
+CREATE TABLE study_system.schedules
 (
     id SERIAL PRIMARY KEY,
     group_id INT NOT NULL,
@@ -40,21 +44,21 @@ CREATE TABLE schedules
 
     CONSTRAINT fk_schedules_groups
         FOREIGN KEY (group_id)
-            REFERENCES groups(id),
+            REFERENCES study_system.groups(id),
 
     CONSTRAINT fk_schedules_teachers
         FOREIGN KEY (teacher_id)
-            REFERENCES teachers(id),
+            REFERENCES study_system.teachers(id),
 
     CONSTRAINT fk_schedules_courses
         FOREIGN KEY (course_id)
-            REFERENCES courses(id)
+            REFERENCES study_system.courses(id)
 );
 --changeset bogdan:2
-ALTER TABLE schedules ALTER COLUMN lesson_date TYPE TIMESTAMP WITHOUT TIME ZONE;
+ALTER TABLE study_system.schedules ALTER COLUMN lesson_date TYPE TIMESTAMP WITHOUT TIME ZONE;
 
 --changeset bogdan:3
-CREATE TABLE groups_courses
+CREATE TABLE study_system.groups_courses
 (
     id        SERIAL PRIMARY KEY,
     group_id  INT NOT NULL,
@@ -62,9 +66,9 @@ CREATE TABLE groups_courses
 
     CONSTRAINT fk_groups_courses
         FOREIGN KEY (group_id)
-            REFERENCES groups (id),
+            REFERENCES study_system.groups (id),
     CONSTRAINT fk_courses_groups
         FOREIGN KEY (course_id)
-            REFERENCES courses (id)
+            REFERENCES study_system.courses (id)
 
 );

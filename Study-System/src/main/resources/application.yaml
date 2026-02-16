@@ -6,6 +6,9 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: db/changelog/db.changelog-master.yaml
 
 task:
   delete-old-schedules:
