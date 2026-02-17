@@ -11,7 +11,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest
 @Testcontainers
-@AutoConfigureMockMvc(addFilters = false)
 class StudySystemApplicationTests {
 
 	private static final String DATABASE_NAME = "postgres_test";

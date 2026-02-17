@@ -36,8 +36,31 @@
 		<spring-boot-test-autoconfigure.version>4.0.0</spring-boot-test-autoconfigure.version>
 		<testcontainers-junit-jupiter>2.0.3</testcontainers-junit-jupiter>
 		<spring-context.version>7.0.4</spring-context.version>
+		<spring-boot-test.version>3.2.2</spring-boot-test.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${spring-boot-test.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
