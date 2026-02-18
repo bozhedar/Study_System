@@ -1,15 +1,15 @@
 package com.example.Study.System;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 class StudySystemApplicationTests {
 
@@ -25,6 +25,13 @@ class StudySystemApplicationTests {
 		registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
 		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
 		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+	}
+
+	@LocalServerPort
+	protected int port;
+
+	protected String url(String path) {
+		return "http://localhost:" + port + path;
 	}
 
 }
