@@ -1,13 +1,37 @@
 package com.example.Study.System;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
 class StudySystemApplicationTests {
 
-	@Test
-	void contextLoads() {
+	private static final String DATABASE_NAME = "postgres_test";
+
+	@Container
+	public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:11.1")
+			.withReuse(true)
+			.withDatabaseName(DATABASE_NAME);
+
+	@DynamicPropertySource
+	static void datasourceProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+	}
+
+	@LocalServerPort
+	protected int port;
+
+	protected String url(String path) {
+		return "http://localhost:" + port + path;
 	}
 
 }
